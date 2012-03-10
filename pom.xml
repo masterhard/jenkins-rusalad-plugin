@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>org.korosoft.hudson.plugin</groupId>
-    <artifactId>rusalad-plugin</artifactId>
+    <artifactId>jenkins-rusalad-plugin</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <url>http://code.google.com/p/russian-salad/</url>
 
