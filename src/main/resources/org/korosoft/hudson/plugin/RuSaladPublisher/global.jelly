@@ -1,0 +1,12 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <f:section title="Russian Salad Test Report">
+    <f:entry title="Number of builds in history pop-up"
+      description="Max number of builds shown in build history popup on test result page">
+      <f:textbox name="rusalad-plugin.numberOfHistoryBuildsInPopup" value="${descriptor.numberOfHistoryBuildsInPopup}" />
+    </f:entry>
+    <f:entry title="Number of builds on chart"
+      description="Max number of builds shown in build history chart on project main page">
+      <f:textbox name="rusalad-plugin.numberOfHistoryBuildsInChart" value="${descriptor.numberOfHistoryBuildsInChart}" />
+    </f:entry>
+  </f:section>
+</j:jelly>

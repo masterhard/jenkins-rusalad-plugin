@@ -1,0 +1,25 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <l:layout title="${it.title} : ${path}">
+    <st:include page="sidepanel.jelly" it="${it.owner}" />
+    <l:header>
+      <link rel="stylesheet" href="${request.contextPath}/plugin/rusalad-plugin/css/jquery.fancybox.css" type="text/css" media="screen" />
+      <link rel="stylesheet" href="${request.contextPath}/plugin/rusalad-plugin/css/rusalad.css" type="text/css" media="screen" />
+      <script type="text/javascript" src="${request.contextPath}/plugin/rusalad-plugin/scripts/fancybox/jquery-1.7.1.min.js"></script>
+      <script type="text/javascript" src="${request.contextPath}/plugin/rusalad-plugin/scripts/fancybox/jquery.fancybox-1.2.1.pack.js"></script>
+      <script type="text/javascript" src="${request.contextPath}/plugin/rusalad-plugin/flowplayer/flowplayer-3.2.6.min.js"></script>
+      <script type="text/javascript" src="${request.contextPath}/plugin/rusalad-plugin/scripts/rusalad/rusalad.js"></script>
+    </l:header>
+    <l:main-panel>
+      <script type="text/javascript">
+        var features = [
+          <j:forEach var="feature" varStatus="st" items="${it.result.featureNames}">
+              ${it.result.features[feature].report}<j:if test="${!st.last}">,</j:if>
+          </j:forEach>
+        ];
+        YAHOO.util.Event.onContentReady("rusalad_result_@ID@", function(){render_rusalad_result("rusalad_result_@ID@", features, "${it.build.project.name}", ${it.build.number}, "${imagesURL}", "${request.contextPath}");}, null)
+      </script>
+      <div id="rusalad_result_@ID@"></div>
+    </l:main-panel>
+  </l:layout>
+</j:jelly>

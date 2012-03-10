@@ -1,0 +1,64 @@
+.historyBuildMargin {
+    font-weight: bold;
+    white-space: nowrap;
+    background-color: #eee;
+    border-bottom: 2px solid white;
+}
+
+.historyBuildNo0 {
+    white-space: nowrap;
+    background-color: #fff;
+}
+
+.historyBuildNo1 {
+    white-space: nowrap;
+    background-color: #eee;
+}
+
+.historyFeatureName0 {
+    background-color: #eee;
+    border-right: 2px solid white;
+}
+
+.historyFeatureName1 {
+    background-color: #fff;
+    border-right: 2px solid white;
+}
+
+.historyScenarioName0 {
+    white-space: nowrap;
+    background-color: #eee;
+    border-right: 2px solid white;
+}
+
+.historyScenarioName1 {
+    white-space: nowrap;
+    background-color: #fff;
+    border-right: 2px solid white;
+}
+
+.historyBulletCell00 {
+    white-space: nowrap;
+    background-color: #eee;
+}
+
+.historyBulletCell01 {
+    white-space: nowrap;
+    background-color: #fff;
+}
+
+.historyBulletCell10 {
+    white-space: nowrap;
+    background-color: #ddd;
+}
+
+.historyBulletCell11 {
+    white-space: nowrap;
+    background-color: #eee;
+}
+
+.historyTable {
+    border: 1px solid #888;
+    padding: 2px;
+}
+
