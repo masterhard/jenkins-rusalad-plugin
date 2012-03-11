@@ -1,6 +1,11 @@
 function render_rusalad_result(containerId, features, jobname, buildno, imagesUrl, appContext) {
     var container = document.getElementById(containerId);
 
+    var versionWarning = document.createElement('div');
+    versionWarning.setAttribute('style', 'display:none');
+    versionWarning.setAttribute('class', 'warning');
+    container.appendChild(versionWarning);
+
     var header = document.createElement('h1');
     header.appendChild(document.createTextNode('Russian Salad test report for build ' + buildno));
     var historyLink = document.createElement('a');
@@ -10,6 +15,17 @@ function render_rusalad_result(containerId, features, jobname, buildno, imagesUr
     header.appendChild(historyLink);
     header.appendChild(document.createTextNode(")"));
     container.appendChild(header);
+
+    $.getJSON(appContext + '/job/' + jobname + '/RSDynamic/Version/',
+        function (data, textStatus, jqXHR) {
+            if (data == null) {
+                return;
+            }
+            if (data.message != null) {
+                versionWarning.innerHTML = data.message + ' Current version is ' + data.currentVersion + '. Latest version is ' + data.latestVersion + '.';
+                versionWarning.setAttribute('style', 'display:block');
+            }
+        });
 
     $(historyLink).fancybox({
         'hideOnContentClick':false,
@@ -130,8 +146,8 @@ function render_rusalad_result(containerId, features, jobname, buildno, imagesUr
                 tvc1.appendChild(document.createTextNode('Video report available: '));
                 var tva = document.createElement('a');
                 var videoName = appContext + '/job/' + jobname + '/' + buildno + '/RSDynamic/Files/' + feature.safeName + '/' + scenario.videoFile;
-                $(tva).hover(function(){
-                    videoName=$(this).attr('href').replace('.mkv#', '');
+                $(tva).hover(function () {
+                    videoName = $(this).attr('href').replace('.mkv#', '');
                 });
                 tva.setAttribute("href", videoName + ".mkv#");
                 tva.appendChild(document.createTextNode(scenario.videoFile));
