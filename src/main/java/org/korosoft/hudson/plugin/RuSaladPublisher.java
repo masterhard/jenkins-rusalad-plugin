@@ -18,6 +18,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.korosoft.hudson.plugin.model.CukeTestResult;
+import org.korosoft.hudson.plugin.model.RuSaladDynamicActionContext;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -69,9 +70,8 @@ public class RuSaladPublisher extends Recorder {
                 throw new RuntimeException(e);
             }
         }
-        build.getActions().add(new CukeTestResultFileAction(build, reportFolder));
-        build.getActions().add(new CukeTestHistoryAction(build));
-
+        RuSaladDynamicActionContext context = new RuSaladDynamicActionContext(build.getProject(), build, reportFolder);
+        build.getActions().add(new CukeTestResultDynamicAction(context));
         return true;
     }
 
@@ -89,7 +89,8 @@ public class RuSaladPublisher extends Recorder {
 
     @Override
     public Collection<? extends Action> getProjectActions(AbstractProject<?, ?> project) {
-        return Arrays.asList(new LatestCukeTestResultAction(project), new CukeTestResultChartAction(project));
+        RuSaladDynamicActionContext context = new RuSaladDynamicActionContext(project, null, null);
+        return Arrays.asList(new LatestCukeTestResultAction(project), new CukeTestResultDynamicAction(context));
     }
 
 

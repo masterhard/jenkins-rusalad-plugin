@@ -1,11 +1,11 @@
-package org.korosoft.hudson.plugin;
+package org.korosoft.hudson.plugin.dynamic;
 
 import hudson.FilePath;
-import hudson.model.AbstractBuild;
-import hudson.model.Action;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+import org.korosoft.hudson.plugin.model.RuSaladDynamicAction;
+import org.korosoft.hudson.plugin.model.RuSaladDynamicActionContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -17,40 +17,31 @@ import java.io.*;
  * @author Dmitry Korotkov
  * @since 1.0
  */
-public class CukeTestResultFileAction implements Action {
+public class CukeTestResultFileAction implements RuSaladDynamicAction {
     public static final String CUKE_RESULT = "cukeResult";
-    private final AbstractBuild<?, ?> build;
-    private final FilePath reportFolder;
 
-    public CukeTestResultFileAction(AbstractBuild<?, ?> build, FilePath reportFolder) {
-        this.build = build;
-        this.reportFolder = reportFolder;
-        saveReportFiles(reportFolder);
-    }
-
-    public String getIconFileName() {
-        return null;
-    }
-
-    public String getDisplayName() {
-        return null;
+    public void doApply(RuSaladDynamicActionContext context) {
+        if (context.getBuild() == null || context.getReportPath() == null) {
+            return;
+        }
+        saveReportFiles(context.getBuild().getRootDir(), context.getReportPath());
     }
 
     public String getUrlName() {
-        return "RSFiles";
+        return "Files";
     }
 
-    public void doDynamic(StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {
-        String path = req.getRestOfPath();
+    public void doDynamic(RuSaladDynamicActionContext context, StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {
+        String path = req.getRestOfPath().substring(getUrlName().length() + 1);
         path = path.replaceAll("[/\\\\]\\.\\.[/\\\\]", "/").replaceAll("^[\\\\/]*", "");
 
-        FilePath reportPath = new FilePath(build.getRootDir()).child(CUKE_RESULT);
+        FilePath reportPath = new FilePath(context.getBuild().getRootDir()).child(CUKE_RESULT);
         FilePath serveFile = reportPath.child(path);
         try {
             if (!serveFile.exists() && path.endsWith(".xml")) {
                 FilePath srtFile = reportPath.child(path.substring(0, path.length() - 4) + ".srt");
                 if (srtFile.exists()) {
-                    serveSrtAsTimeText(req, rsp, srtFile);
+                    serveSrtAsTimeText(rsp, srtFile);
                 }
             }
             if (!serveFile.exists()) {
@@ -65,7 +56,7 @@ public class CukeTestResultFileAction implements Action {
         }
     }
 
-    private void serveSrtAsTimeText(StaplerRequest req, StaplerResponse rsp, FilePath srtFile) throws IOException {
+    private void serveSrtAsTimeText(StaplerResponse rsp, FilePath srtFile) throws IOException {
         StringBuilder builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         builder.append("<tt xml:lang=\"en\" xmlns=\"http://www.w3.org/2006/10/ttaf1\" xmlns:tts=\"http://www.w3.org/2006/10/ttaf1#styling\">");
@@ -131,8 +122,8 @@ public class CukeTestResultFileAction implements Action {
         writer.close();
     }
 
-    private void saveReportFiles(FilePath reportFolder) {
-        final File cukeResult = new File(build.getRootDir(), CUKE_RESULT);
+    private void saveReportFiles(File rootDir, FilePath reportFolder) {
+        final File cukeResult = new File(rootDir, CUKE_RESULT);
         if (!cukeResult.mkdir()) {
             throw new RuntimeException("Failed to create folder " + cukeResult);
         }

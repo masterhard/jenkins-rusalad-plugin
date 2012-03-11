@@ -19,7 +19,7 @@ function render_rusalad_result(containerId, features, jobname, buildno, imagesUr
         'frameWidth':200,
         'frameHeight':100,
         'callbackOnShow':function () {
-            render_rs_history("fancy_div", appContext + '/job/' + jobname + '/' + buildno + '/RSHistory/', jobname, imagesUrl, appContext);
+            render_rs_history("fancy_div", appContext + '/job/' + jobname + '/' + buildno + '/RSDynamic/History/', jobname, imagesUrl, appContext);
         }
     });
 
@@ -129,7 +129,7 @@ function render_rusalad_result(containerId, features, jobname, buildno, imagesUr
                 var tvc1 = document.createElement('td');
                 tvc1.appendChild(document.createTextNode('Video report available: '));
                 var tva = document.createElement('a');
-                var videoName = appContext + '/job/' + jobname + '/' + buildno + '/RSFiles/' + feature.safeName + '/' + scenario.videoFile;
+                var videoName = appContext + '/job/' + jobname + '/' + buildno + '/RSDynamic/Files/' + feature.safeName + '/' + scenario.videoFile;
                 $(tva).hover(function(){
                     videoName=$(this).attr('href').replace('.mkv#', '');
                 });

@@ -1,14 +1,16 @@
-package org.korosoft.hudson.plugin;
+package org.korosoft.hudson.plugin.dynamic;
 
 import hudson.FilePath;
 import hudson.model.AbstractBuild;
-import hudson.model.Action;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+import org.korosoft.hudson.plugin.RuSaladPublisher;
 import org.korosoft.hudson.plugin.model.CukeFeature;
 import org.korosoft.hudson.plugin.model.CukeTestResult;
+import org.korosoft.hudson.plugin.model.RuSaladDynamicAction;
+import org.korosoft.hudson.plugin.model.RuSaladDynamicActionContext;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -20,39 +22,22 @@ import java.io.PrintWriter;
  * @author Dmitry Korotkov
  * @since 1.0
  */
-public class CukeTestHistoryAction implements Action {
-
-    private final AbstractBuild<?, ?> build;
-    private transient JSONObject history;
-
-    public CukeTestHistoryAction(AbstractBuild<?, ?> build) {
-        this.build = build;
-    }
-
-    public String getIconFileName() {
-        return null;
-    }
-
-    public String getDisplayName() {
-        return null;
-    }
+public class CukeTestHistoryAction implements RuSaladDynamicAction {
 
     public String getUrlName() {
-        return "RSHistory";
+        return "History";
     }
 
-    public JSONObject getHistory() throws IOException {
-        history = loadHistory(build);
-        return history;
-    }
-
-    public void doDynamic(StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {
+    public void doDynamic(RuSaladDynamicActionContext context, StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {
         rsp.setContentType("application/json");
         rsp.setCharacterEncoding("UTF-8");
-        String res = getHistory().toString(4);
+        String res = loadHistory(context.getBuild()).toString(4);
         PrintWriter writer = rsp.getWriter();
         writer.write(res);
         writer.close();
+    }
+
+    public void doApply(RuSaladDynamicActionContext context) {
     }
 
     private JSONObject loadHistory(AbstractBuild<?, ?> build) throws IOException {

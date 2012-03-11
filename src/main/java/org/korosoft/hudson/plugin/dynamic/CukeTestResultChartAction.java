@@ -1,8 +1,7 @@
-package org.korosoft.hudson.plugin;
+package org.korosoft.hudson.plugin.dynamic;
 
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
-import hudson.model.Action;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,7 +14,11 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+import org.korosoft.hudson.plugin.AbstractCukeTestResultAction;
+import org.korosoft.hudson.plugin.RuSaladPublisher;
 import org.korosoft.hudson.plugin.model.CukeFeature;
+import org.korosoft.hudson.plugin.model.RuSaladDynamicAction;
+import org.korosoft.hudson.plugin.model.RuSaladDynamicActionContext;
 
 import javax.servlet.ServletException;
 import java.awt.*;
@@ -25,36 +28,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CukeTestResultChartAction implements Action {
+public class CukeTestResultChartAction implements RuSaladDynamicAction {
     Log log = LogFactory.getLog(CukeTestResultChartAction.class);
-    private final AbstractProject<?, ?> project;
-
-    public CukeTestResultChartAction(AbstractProject<?, ?> project) {
-        this.project = project;
-    }
-
-    public String getIconFileName() {
-        return null;
-    }
-
-    public String getDisplayName() {
-        return null;
-    }
 
     public String getUrlName() {
-        return "RSChart";
+        return "Chart";
     }
 
-    public void doDynamic(StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {
+    public void doApply(RuSaladDynamicActionContext context) {
+    }
+
+    public void doDynamic(RuSaladDynamicActionContext context, StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {
         rsp.setContentType("image/png");
         rsp.setHeader("Cache-Control", "no-cache");
         final OutputStream stream = rsp.getOutputStream();
-        final JFreeChart chart = createChart(retrieveHistory());
+        final JFreeChart chart = createChart(retrieveHistory(context.getProject()));
         ChartUtilities.writeChartAsPNG(stream, chart, 800, 450);
         stream.close();
     }
 
-    private List<ChartBuildEntry> retrieveHistory() {
+    private List<ChartBuildEntry> retrieveHistory(AbstractProject<?, ?> project) {
         List<ChartBuildEntry> result = new ArrayList<ChartBuildEntry>();
         List<AbstractCukeTestResultAction> actions = new ArrayList<AbstractCukeTestResultAction>();
         AbstractBuild<?, ?> b = project.getLastBuild();
