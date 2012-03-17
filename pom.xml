@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>org.korosoft.hudson.plugin</groupId>
-    <artifactId>rusalad-plugin</artifactId>
+    <artifactId>jenkins-rusalad-plugin</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <url>http://code.google.com/p/russian-salad/</url>
 
@@ -51,6 +51,27 @@
                 <groupId>org.jvnet.hudson.tools</groupId>
                 <artifactId>maven-hpi-plugin</artifactId>
                 <version>2.1.1</version>
+                <configuration>
+                    <hpiName>rusalad-plugin</hpiName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2-beta-5</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/distributive.xml</descriptor>
+                    </descriptors>
+                    <finalName>${project.artifactId}-${project.version}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
