@@ -10,7 +10,7 @@
         <!-- which version of Hudson is this plugin built against? -->
     </parent>
 
-    <groupId>org.korosoft.hudson.plugin</groupId>
+    <groupId>org.korosoft.rusalad</groupId>
     <artifactId>jenkins-rusalad-plugin</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <url>http://code.google.com/p/russian-salad/</url>
