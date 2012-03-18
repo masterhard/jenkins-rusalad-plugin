@@ -135,6 +135,12 @@ function render_rusalad_result(containerId, features, jobname, buildno, imagesUr
                 tsc1.appendChild(stepImg);
                 var formattedArgs = step.args.replace(/&lt;arg>(.*?)&lt;\/arg>/g, "<b>$1</b>");
                 tsc1.innerHTML = tsc1.innerHTML + step.keyword + formattedArgs;
+                if (step.exception != null) {
+                    var exceptionDiv = document.createElement('div');
+                    exceptionDiv.setAttribute('style', 'color:red;display:block;padding-left:2em;');
+                    exceptionDiv.appendChild(document.createTextNode('Error: ' + step.exception));
+                    tsc1.appendChild(exceptionDiv);
+                }
 
                 tsr.appendChild(tsc1);
                 tsb.appendChild(tsr);
