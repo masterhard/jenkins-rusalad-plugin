@@ -163,7 +163,7 @@ function render_rusalad_result(containerId, features, jobname, buildno, imagesUr
                     'zoomSpeedIn':400,
                     'zoomSpeedOut':400,
                     'callbackOnShow':function () {
-                        player = $f("fancy_div", appContext + '/plugin/rusalad-plugin/flowplayer/flowplayer-3.2.7.swf', {
+                        player = $f("fancy_div", appContext + '/plugin/jenkins-rusalad-plugin/flowplayer/flowplayer-3.2.7.swf', {
                             play:{opacity:0},
                             clip:{
                                 autoPlay:true,
@@ -186,11 +186,11 @@ function render_rusalad_result(containerId, features, jobname, buildno, imagesUr
                             },
                             plugins:{
                                 captions:{
-                                    url:appContext + '/plugin/rusalad-plugin/flowplayer/flowplayer.captions-3.2.3.swf',
+                                    url:appContext + '/plugin/jenkins-rusalad-plugin/flowplayer/flowplayer.captions-3.2.3.swf',
                                     captionTarget:'content'
                                 },
                                 content:{
-                                    url:appContext + '/plugin/rusalad-plugin/flowplayer/flowplayer.content-3.2.0.swf',
+                                    url:appContext + '/plugin/jenkins-rusalad-plugin/flowplayer/flowplayer.content-3.2.0.swf',
                                     bottom:5,
                                     height:40,
                                     backgroundColor:'transparent',

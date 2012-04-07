@@ -3,12 +3,12 @@
   <l:layout title="${it.title} : ${path}">
     <st:include page="sidepanel.jelly" it="${it.owner}" />
     <l:header>
-      <link rel="stylesheet" href="${request.contextPath}/plugin/rusalad-plugin/css/jquery.fancybox.css" type="text/css" media="screen" />
-      <link rel="stylesheet" href="${request.contextPath}/plugin/rusalad-plugin/css/rusalad.css" type="text/css" media="screen" />
-      <script type="text/javascript" src="${request.contextPath}/plugin/rusalad-plugin/scripts/fancybox/jquery-1.7.1.min.js"></script>
-      <script type="text/javascript" src="${request.contextPath}/plugin/rusalad-plugin/scripts/fancybox/jquery.fancybox-1.2.1.pack.js"></script>
-      <script type="text/javascript" src="${request.contextPath}/plugin/rusalad-plugin/flowplayer/flowplayer-3.2.6.min.js"></script>
-      <script type="text/javascript" src="${request.contextPath}/plugin/rusalad-plugin/scripts/rusalad/rusalad.js"></script>
+      <link rel="stylesheet" href="${request.contextPath}/plugin/jenkins-rusalad-plugin/css/jquery.fancybox.css" type="text/css" media="screen" />
+      <link rel="stylesheet" href="${request.contextPath}/plugin/jenkins-rusalad-plugin/css/rusalad.css" type="text/css" media="screen" />
+      <script type="text/javascript" src="${request.contextPath}/plugin/jenkins-rusalad-plugin/scripts/fancybox/jquery-1.7.1.min.js"></script>
+      <script type="text/javascript" src="${request.contextPath}/plugin/jenkins-rusalad-plugin/scripts/fancybox/jquery.fancybox-1.2.1.pack.js"></script>
+      <script type="text/javascript" src="${request.contextPath}/plugin/jenkins-rusalad-plugin/flowplayer/flowplayer-3.2.6.min.js"></script>
+      <script type="text/javascript" src="${request.contextPath}/plugin/jenkins-rusalad-plugin/scripts/rusalad/rusalad.js"></script>
     </l:header>
     <l:main-panel>
       <script type="text/javascript">
