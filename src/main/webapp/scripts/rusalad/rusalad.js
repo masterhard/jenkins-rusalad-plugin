@@ -34,6 +34,7 @@ function render_rusalad_result(containerId, features, jobname, buildno, imagesUr
         'zoomSpeedOut':400,
         'frameWidth':200,
         'frameHeight':100,
+        'centerOnScroll':false,
         'callbackOnShow':function () {
             render_rs_history("fancy_div", appContext + '/job/' + jobname + '/' + buildno + '/RSDynamic/History/', jobname, imagesUrl, appContext);
         }
