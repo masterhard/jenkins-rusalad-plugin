@@ -12,7 +12,7 @@
 
     <groupId>org.korosoft.rusalad</groupId>
     <artifactId>jenkins-rusalad-plugin</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <url>http://code.google.com/p/russian-salad/</url>
 
     <packaging>hpi</packaging>
