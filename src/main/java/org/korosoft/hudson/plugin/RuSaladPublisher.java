@@ -17,6 +17,7 @@ import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
+import org.korosoft.hudson.plugin.model.CukeFeature;
 import org.korosoft.hudson.plugin.model.CukeTestResult;
 import org.korosoft.hudson.plugin.model.RuSaladDynamicActionContext;
 
@@ -115,7 +116,31 @@ public class RuSaladPublisher extends Recorder {
                     return FormValidation.error("Specified path does not exist.");
                 }
                 if (!path.isDirectory()) {
-                    return FormValidation.error("Specified file mut point to a folder but it points to a file");
+                    return FormValidation.error("Specified file must point to a folder but it points to a file");
+                }
+                // Try to find at least one report...
+                boolean reportFileFound = false;
+                boolean tooDeep = false;
+                for (FilePath child : path.list()) {
+                    if (child.getName().equals(CukeFeature.REPORT_JSON)) {
+                        tooDeep = true;
+                        break;
+                    }
+                    if (!child.isDirectory()) {
+                        continue;
+                    }
+                    for (FilePath grandChild : child.list(CukeFeature.REPORT_JSON)) {
+                        reportFileFound = true;
+                    }
+                    if (reportFileFound) {
+                        break;
+                    }
+                }
+                if (tooDeep) {
+                    return FormValidation.error(String.format("Specified path contains '%s' file. Normally that means that you should specify a folder one lever higher.", CukeFeature.REPORT_JSON));
+                }
+                if (!reportFileFound) {
+                    return FormValidation.error("Specified path exists, but no reports were found inside. Note that reports are usually placed into folders with the names of features.");
                 }
                 return FormValidation.ok();
             } catch (InterruptedException e) {
