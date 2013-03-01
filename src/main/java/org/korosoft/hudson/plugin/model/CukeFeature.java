@@ -14,13 +14,11 @@ import java.io.IOException;
 public class CukeFeature {
     public static final String REPORT_JSON = "report.json";
     private final String name;
-    private final FilePath path;
     private final JSONObject report;
     private final JSONObject videoLogs;
 
     public CukeFeature(String name, FilePath path) throws IOException, InterruptedException {
         this.name = name;
-        this.path = path;
         FilePath[] files = path.list("*.mkv");
         videoLogs = new JSONObject();
         for (FilePath dir : files) {
@@ -37,10 +35,6 @@ public class CukeFeature {
 
     public String getName() {
         return name;
-    }
-
-    public FilePath getPath() {
-        return path;
     }
 
     public JSONObject getReport() {
