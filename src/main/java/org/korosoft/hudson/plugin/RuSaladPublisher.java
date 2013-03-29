@@ -3,10 +3,7 @@ package org.korosoft.hudson.plugin;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractProject;
-import hudson.model.Action;
-import hudson.model.BuildListener;
+import hudson.model.*;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Publisher;
@@ -35,10 +32,14 @@ import java.util.Collection;
 public class RuSaladPublisher extends Recorder {
 
     private String reportFolder;
+    private int buildFailThreshold = Integer.MAX_VALUE;
+    private boolean useUnstableMarker = true;
 
     @DataBoundConstructor
-    public RuSaladPublisher(String reportFolder) {
+    public RuSaladPublisher(String reportFolder, int buildFailThreshold, boolean useUnstableMarker) {
         this.reportFolder = reportFolder;
+        this.buildFailThreshold = buildFailThreshold;
+        this.useUnstableMarker = useUnstableMarker;
     }
 
     @Override
@@ -72,12 +73,34 @@ public class RuSaladPublisher extends Recorder {
             }
         }
         RuSaladDynamicActionContext context = new RuSaladDynamicActionContext(build.getProject(), build, reportFolder);
+        int failCount = 0;
+        try {
+            for (CukeFeature cukeFeature : result.getFeatures().values()) {
+                for (Object scenario : cukeFeature.getReport().getJSONArray("scenarios")) {
+                    if (!((JSONObject) scenario).optBoolean("passed")) {
+                        failCount++;
+                    }
+                }
+
+            }
+        } catch (Exception ignored) {
+        }
+        if (failCount > buildFailThreshold) {
+            build.setResult(Result.FAILURE);
+        } else if (failCount > 0 && useUnstableMarker) {
+            build.setResult(Result.UNSTABLE);
+        }
+
         build.getActions().add(new CukeTestResultDynamicAction(context));
         return true;
     }
 
     public String getReportFolder() {
         return reportFolder;
+    }
+
+    public int getBuildFailThreshold() {
+        return buildFailThreshold;
     }
 
     public DescriptorImpl myGetDescriptor() {
