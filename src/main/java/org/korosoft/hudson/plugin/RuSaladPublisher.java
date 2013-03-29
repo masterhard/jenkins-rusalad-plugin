@@ -92,6 +92,12 @@ public class RuSaladPublisher extends Recorder {
         }
 
         build.getActions().add(new CukeTestResultDynamicAction(context));
+        try {
+            build.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         return true;
     }
 
