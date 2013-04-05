@@ -93,9 +93,13 @@ public class RuSaladPublisher extends Recorder {
         } catch (Exception ignored) {
         }
         if (failCount > buildFailThreshold) {
-            build.setResult(Result.FAILURE);
+            if (build.getResult().isBetterThan(Result.FAILURE)) {
+                build.setResult(Result.FAILURE);
+            }
         } else if (failCount > 0 && useUnstableMarker) {
-            build.setResult(Result.UNSTABLE);
+            if (build.getResult().isBetterThan(Result.UNSTABLE)) {
+                build.setResult(Result.UNSTABLE);
+            }
         }
 
         build.getActions().add(new CukeTestResultDynamicAction(context, reportFolder));
