@@ -34,16 +34,23 @@ public class RuSaladPublisher extends Recorder {
     private String reportFolder;
     private int buildFailThreshold = Integer.MAX_VALUE;
     private boolean useUnstableMarker = true;
+    private boolean performForUnstableBuild = true;
 
     @DataBoundConstructor
-    public RuSaladPublisher(String reportFolder, int buildFailThreshold, boolean useUnstableMarker) {
+    public RuSaladPublisher(String reportFolder, int buildFailThreshold, boolean useUnstableMarker, boolean performForUnstableBuild) {
         this.reportFolder = reportFolder;
         this.buildFailThreshold = buildFailThreshold;
         this.useUnstableMarker = useUnstableMarker;
+        this.performForUnstableBuild = performForUnstableBuild;
     }
 
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
+        // Do not publish report for unsuccessful builds.
+        if (!performForUnstableBuild && build.getResult().isWorseOrEqualTo(Result.UNSTABLE)) {
+            return true;
+        }
+
         final CukeTestResultAction existingAction = build.getAction(CukeTestResultAction.class);
 
         final CukeTestResult result;
@@ -103,6 +110,14 @@ public class RuSaladPublisher extends Recorder {
 
     public String getReportFolder() {
         return reportFolder;
+    }
+
+    public boolean isUseUnstableMarker() {
+        return useUnstableMarker;
+    }
+
+    public boolean isPerformForUnstableBuild() {
+        return performForUnstableBuild;
     }
 
     public int getBuildFailThreshold() {

@@ -4,6 +4,9 @@
         <f:textbox/>
     </f:entry>
     <f:advanced>
+        <f:entry title="Aggregate RuSalad report for unstable builds" field="performForUnstableBuild">
+            <f:checkbox/>
+        </f:entry>
         <f:entry title="Number of scenarios to fail to mark build as 'FAILED'" field="buildFailThreshold">
             <f:textbox/>
         </f:entry>
