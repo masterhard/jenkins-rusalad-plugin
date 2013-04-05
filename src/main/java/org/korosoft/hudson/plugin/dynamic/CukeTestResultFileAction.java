@@ -20,11 +20,11 @@ import java.io.*;
 public class CukeTestResultFileAction implements RuSaladDynamicAction {
     public static final String CUKE_RESULT = "cukeResult";
 
-    public void doApply(RuSaladDynamicActionContext context) {
-        if (context.getBuild() == null || context.getReportPath() == null) {
+    public void doApply(RuSaladDynamicActionContext context, FilePath reportPath) {
+        if (context.getBuild() == null || reportPath == null) {
             return;
         }
-        saveReportFiles(context.getBuild().getRootDir(), context.getReportPath());
+        saveReportFiles(context.getBuild().getRootDir(), reportPath);
     }
 
     public String getUrlName() {

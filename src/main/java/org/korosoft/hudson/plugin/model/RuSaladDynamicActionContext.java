@@ -13,12 +13,10 @@ import hudson.model.AbstractProject;
 public class RuSaladDynamicActionContext {
     private final AbstractProject<?, ?> project;
     private final AbstractBuild<?, ?> build;
-    private final FilePath reportPath;
 
-    public RuSaladDynamicActionContext(AbstractProject<?, ?> project, AbstractBuild<?, ?> build, FilePath reportPath) {
+    public RuSaladDynamicActionContext(AbstractProject<?, ?> project, AbstractBuild<?, ?> build) {
         this.project = project;
         this.build = build;
-        this.reportPath = reportPath;
     }
 
     public AbstractProject<?, ?> getProject() {
@@ -27,10 +25,6 @@ public class RuSaladDynamicActionContext {
 
     public AbstractBuild<?, ?> getBuild() {
         return build;
-    }
-
-    public FilePath getReportPath() {
-        return reportPath;
     }
 
 }

@@ -1,5 +1,6 @@
 package org.korosoft.hudson.plugin.dynamic;
 
+import hudson.FilePath;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import net.sf.json.JSONObject;
@@ -35,7 +36,7 @@ public class CukeTestResultChartAction implements RuSaladDynamicAction {
         return "Chart";
     }
 
-    public void doApply(RuSaladDynamicActionContext context) {
+    public void doApply(RuSaladDynamicActionContext context, FilePath reportPath) {
     }
 
     public void doDynamic(RuSaladDynamicActionContext context, StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {

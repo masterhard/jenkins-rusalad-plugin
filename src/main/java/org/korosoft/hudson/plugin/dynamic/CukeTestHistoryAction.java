@@ -37,7 +37,7 @@ public class CukeTestHistoryAction implements RuSaladDynamicAction {
         writer.close();
     }
 
-    public void doApply(RuSaladDynamicActionContext context) {
+    public void doApply(RuSaladDynamicActionContext context, FilePath reportPath) {
     }
 
     private JSONObject loadHistory(AbstractBuild<?, ?> build) throws IOException {

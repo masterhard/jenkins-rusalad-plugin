@@ -1,5 +1,6 @@
 package org.korosoft.hudson.plugin.dynamic;
 
+import hudson.FilePath;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
@@ -35,7 +36,7 @@ public class VersionDynamicAction implements RuSaladDynamicAction {
         return "Version";
     }
 
-    public void doApply(RuSaladDynamicActionContext context) {
+    public void doApply(RuSaladDynamicActionContext context, FilePath reportPath) {
     }
 
     private String getNewVersionAvailableMessage() {

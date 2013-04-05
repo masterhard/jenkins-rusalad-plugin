@@ -72,7 +72,7 @@ public class RuSaladPublisher extends Recorder {
                 throw new RuntimeException(e);
             }
         }
-        RuSaladDynamicActionContext context = new RuSaladDynamicActionContext(build.getProject(), build, reportFolder);
+        RuSaladDynamicActionContext context = new RuSaladDynamicActionContext(build.getProject(), build);
         int failCount = 0;
         try {
             for (CukeFeature cukeFeature : result.getFeatures().values()) {
@@ -91,7 +91,7 @@ public class RuSaladPublisher extends Recorder {
             build.setResult(Result.UNSTABLE);
         }
 
-        build.getActions().add(new CukeTestResultDynamicAction(context));
+        build.getActions().add(new CukeTestResultDynamicAction(context, reportFolder));
         try {
             build.save();
         } catch (IOException e) {
@@ -119,8 +119,8 @@ public class RuSaladPublisher extends Recorder {
 
     @Override
     public Collection<? extends Action> getProjectActions(AbstractProject<?, ?> project) {
-        RuSaladDynamicActionContext context = new RuSaladDynamicActionContext(project, null, null);
-        return Arrays.asList(new LatestCukeTestResultAction(project), new CukeTestResultDynamicAction(context));
+        RuSaladDynamicActionContext context = new RuSaladDynamicActionContext(project, null);
+        return Arrays.asList(new LatestCukeTestResultAction(project), new CukeTestResultDynamicAction(context, null));
     }
 
 

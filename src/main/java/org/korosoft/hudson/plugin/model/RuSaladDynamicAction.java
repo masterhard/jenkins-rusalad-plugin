@@ -1,5 +1,6 @@
 package org.korosoft.hudson.plugin.model;
 
+import hudson.FilePath;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
@@ -31,7 +32,7 @@ public interface RuSaladDynamicAction {
      * This method is invoked when the action is bound to the build / project.
      * @param context Dynamic action context
      */
-    void doApply(RuSaladDynamicActionContext context);
+    void doApply(RuSaladDynamicActionContext context, FilePath reportPath);
 
     /**
      * Method getUrlName should return the name for action to be used in URL part.

@@ -1,5 +1,6 @@
 package org.korosoft.hudson.plugin;
 
+import hudson.FilePath;
 import hudson.model.Action;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
@@ -20,10 +21,10 @@ public class CukeTestResultDynamicAction implements Action {
 
     private final RuSaladDynamicActionContext context;
 
-    public CukeTestResultDynamicAction(RuSaladDynamicActionContext context) {
+    public CukeTestResultDynamicAction(RuSaladDynamicActionContext context, FilePath reportPath) {
         this.context = context;
         for (RuSaladDynamicAction action : RuSaladUtil.getInstance().getAllDynamicActions()) {
-            action.doApply(context);
+            action.doApply(context, reportPath);
         }
     }
 
