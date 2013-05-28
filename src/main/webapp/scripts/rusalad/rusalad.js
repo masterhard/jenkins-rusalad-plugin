@@ -1,11 +1,6 @@
 function render_rusalad_result(containerId, features, jobname, buildno, imagesUrl, appContext) {
     var container = document.getElementById(containerId);
 
-    var versionWarning = document.createElement('div');
-    versionWarning.setAttribute('style', 'display:none');
-    versionWarning.setAttribute('class', 'warning');
-    container.appendChild(versionWarning);
-
     var header = document.createElement('h1');
     header.appendChild(document.createTextNode('Russian Salad test report for build ' + buildno));
     var historyLink = document.createElement('a');
@@ -15,17 +10,6 @@ function render_rusalad_result(containerId, features, jobname, buildno, imagesUr
     header.appendChild(historyLink);
     header.appendChild(document.createTextNode(")"));
     container.appendChild(header);
-
-    $.getJSON(appContext + '/job/' + jobname + '/RSDynamic/Version/',
-        function (data, textStatus, jqXHR) {
-            if (data == null) {
-                return;
-            }
-            if (data.message != null) {
-                versionWarning.innerHTML = data.message + ' Current version is ' + data.currentVersion + '. Latest version is ' + data.latestVersion + '.';
-                versionWarning.setAttribute('style', 'display:block');
-            }
-        });
 
     $(historyLink).fancybox({
         'hideOnContentClick':false,
