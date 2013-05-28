@@ -1,2 +1,0 @@
-rusalad.latest.stable.version=1.0.6
-rusalad.latest.stable.version.url=http://russian-salad.googlecode.com/git/jenkins-rusalad-plugin/version.txt
