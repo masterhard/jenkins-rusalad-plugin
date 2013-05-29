@@ -28,6 +28,13 @@
         </developer>
     </developers>
 
+    <licenses>
+        <license>
+            <name>New BSD License</name>
+            <url>http://opensource.org/licenses/BSD-3-Clause</url>
+        </license>
+    </licenses>
+
     <build>
         <resources>
             <resource>
