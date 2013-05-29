@@ -56,26 +56,27 @@
 
     <repositories>
         <repository>
-            <id>guice-maven</id>
-            <name>guice maven</name>
-            <url>http://guice-maven.googlecode.com/svn/trunk</url>
-        </repository>
-        <repository>
-            <id>jenkins-release-repo</id>
-            <url>http://maven.jenkins-ci.org:8081/content/groups/artifacts/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>repo.jenkins-ci.org</id>
+            <url>http://repo.jenkins-ci.org/public/</url>
         </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repo.jenkins-ci.org</id>
+            <url>http://repo.jenkins-ci.org/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <scm>
         <connection>scm:git:ssh://github.com/jenkinsci/rusalad-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jenkinsci/rusalad-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/rusalad-plugin</url>
     </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 
 </project>
