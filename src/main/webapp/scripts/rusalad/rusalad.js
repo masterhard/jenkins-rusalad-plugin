@@ -120,6 +120,22 @@ function render_rusalad_result(containerId, features, jobname, buildno, imagesUr
                 tsc1.appendChild(stepImg);
                 var formattedArgs = step.args.replace(/&lt;arg>(.*?)&lt;\/arg>/g, "<b>$1</b>");
                 tsc1.innerHTML = tsc1.innerHTML + step.keyword + formattedArgs;
+
+                if (step.screenshot != null) {
+                    var screenshotA = document.createElement('a');
+                    screenshotA.setAttribute('href', appContext + '/job/' + jobname + '/' + buildno + '/RSDynamic/Files/' + feature.safeName + '/' + step.screenshot);
+                    screenshotA.setAttribute('title', step.keyword + step.args.replace(/&lt;arg>(.*?)&lt;\/arg>/g, "$1"));
+                    screenshotA.setAttribute('rel', 'gallery_' + feature.safeName);
+                    var screenshotImg = document.createElement('img');
+                    screenshotImg.setAttribute('src', appContext + '/plugin/rusalad-plugin/images/16x16/camera.png');
+                    screenshotImg.setAttribute('width', '16');
+                    screenshotImg.setAttribute('height', '16');
+                    screenshotImg.setAttribute('alt', 'Screenshot is available');
+                    screenshotA.appendChild(screenshotImg);
+                    tsc1.appendChild(document.createTextNode(' '));
+                    tsc1.appendChild(screenshotA);
+                }
+
                 if (step.exception != null) {
                     var exceptionDiv = document.createElement('div');
                     exceptionDiv.setAttribute('style', 'color:red;display:block;padding-left:2em;');
@@ -220,6 +236,8 @@ function render_rusalad_result(containerId, features, jobname, buildno, imagesUr
 
         tf.appendChild(tfb);
         container.appendChild(tf);
+
+        $("a[rel=" + 'gallery_' + feature.safeName + "]").fancybox();
     }
 }
 
