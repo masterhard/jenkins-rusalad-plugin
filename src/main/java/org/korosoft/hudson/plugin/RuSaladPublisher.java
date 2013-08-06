@@ -56,6 +56,8 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Russian Salad test result publisher
@@ -88,9 +90,15 @@ public class RuSaladPublisher extends Recorder {
         final CukeTestResultAction existingAction = build.getAction(CukeTestResultAction.class);
 
         final CukeTestResult result;
-        final FilePath reportFolder = build.getWorkspace().child(this.reportFolder);
+        String folderName = this.reportFolder;
+        for (Map.Entry<String, String> entry : (Set<Map.Entry<String, String>>)build.getBuildVariables().entrySet()) {
+            String placeholder = String.format("${%s}", entry.getKey());
+            folderName = folderName.replace(placeholder, entry.getValue());
+        }
+
+        final FilePath reportFilePath = build.getWorkspace().child(folderName);
         try {
-            result = new CukeTestResult(reportFolder);
+            result = new CukeTestResult(reportFilePath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
@@ -136,7 +144,7 @@ public class RuSaladPublisher extends Recorder {
             }
         }
 
-        build.getActions().add(new CukeTestResultDynamicAction(context, reportFolder));
+        build.getActions().add(new CukeTestResultDynamicAction(context, reportFilePath));
         try {
             build.save();
         } catch (IOException e) {
@@ -189,6 +197,9 @@ public class RuSaladPublisher extends Recorder {
                 FilePath someWorkspace = project.getSomeWorkspace();
                 if (someWorkspace == null) {
                     return FormValidation.warning("Cannot validate the path since the project was never built.");
+                }
+                if (value.contains("${")) {
+                    return FormValidation.ok("Report folder path contains variable placeholder(s). Validation was not performed.");
                 }
                 FilePath path = someWorkspace.child(value);
                 if (!path.exists()) {
