@@ -31,5 +31,5 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
     <h2>Russian Salad History Chart</h2>
-    <img src="${request.contextPath}/job/${it.project.name}/RSDynamic/Chart/"/>
+    <a href="${request.contextPath}/job/${it.project.name}/LatestRSTestResult"><img src="${request.contextPath}/job/${it.project.name}/RSDynamic/Chart/" border="0"/></a>
 </j:jelly>
