@@ -43,6 +43,7 @@ import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -182,6 +183,7 @@ public class CukeTestResultChartAction implements RuSaladDynamicAction {
         plot.getDomainAxis().setCategoryMargin(0);
         plot.getDomainAxis().setUpperMargin(0);
         plot.getDomainAxis().setLowerMargin(0);
+        plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_90);
         plot.getRangeAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
         plot.getRenderer().setSeriesPaint(0, new Color(0xFF8080));
