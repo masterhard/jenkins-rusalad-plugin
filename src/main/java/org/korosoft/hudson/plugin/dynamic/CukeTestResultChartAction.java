@@ -37,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import hudson.FilePath;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
+import hudson.util.ColorPalette;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -159,8 +160,8 @@ public class CukeTestResultChartAction implements RuSaladDynamicAction {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         String seriesFailed = "Failed";
         String seriesPassed = "Passed";
-        String seriesRegression = "Failed [Regression]";
-        String seriesImprovement = "Passed [Improvement]";
+        String seriesRegression = "Failed [New failures]";
+        String seriesImprovement = "Passed [Fixed]";
 
         dataset.setValue(0, seriesFailed, "0");
         dataset.setValue(0, seriesRegression, "0");
@@ -186,10 +187,10 @@ public class CukeTestResultChartAction implements RuSaladDynamicAction {
         plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_90);
         plot.getRangeAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-        plot.getRenderer().setSeriesPaint(0, new Color(0xFF8080));
-        plot.getRenderer().setSeriesPaint(1, new Color(0xFF0000));
-        plot.getRenderer().setSeriesPaint(2, new Color(0x0000C0));
-        plot.getRenderer().setSeriesPaint(3, new Color(0x8080FF));
+        plot.getRenderer().setSeriesPaint(0, ColorPalette.RED);
+        plot.getRenderer().setSeriesPaint(1, new Color(ColorPalette.RED.getRed() * 2 / 3, ColorPalette.RED.getGreen() * 2 / 3, ColorPalette.RED.getBlue() * 2 / 3));
+        plot.getRenderer().setSeriesPaint(2, new Color(ColorPalette.BLUE.getRed() * 2 / 3, ColorPalette.BLUE.getGreen() * 2 / 3, ColorPalette.BLUE.getBlue() * 2 / 3));
+        plot.getRenderer().setSeriesPaint(3, ColorPalette.BLUE);
         return chart;
     }
 
